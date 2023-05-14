@@ -10,12 +10,14 @@
 
 (defvar *index*)
 
+(defun symbol-type (symbol)
+  (nth-value 1 (find-symbol (symbol-name symbol)
+                            (symbol-package symbol))))
+
 (defun print-symbol (symbol)
   (format nil "~a~:[::~;:~]~a"
           (package-name (symbol-package symbol))
-          (eq :external
-              (nth-value 1 (find-symbol (symbol-name symbol)
-                                        (symbol-package symbol))))
+          (eq :external (symbol-type symbol))
           (symbol-name symbol)))
 
 (defun make-symbol-document (symbol &aux (doc (make-instance 'montezuma:document))
