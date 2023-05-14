@@ -1,6 +1,6 @@
 (defpackage #:doc-apropos
   (:use #:cl)
-  (:export #:initialize-symbols
+  (:export #:initialize-index
            #:doc-apropos
            #:*doc-types*))
 
