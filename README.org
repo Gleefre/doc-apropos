@@ -47,7 +47,7 @@
   ; => 2
   #+END_SRC
 
-  (You can note that it prints same entry twice.
+  (You can notice that it prints same entry twice.
   This is a bug that has yet to be fixed.)
 
   If you want to reregister the available symbols, you can use ~initialize-index~ function:
