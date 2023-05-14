@@ -10,6 +10,8 @@
 
 (defvar *index*)
 
+(defvar *registered*)
+
 (defun symbol-type (symbol)
   (nth-value 1 (find-symbol (symbol-name symbol)
                             (symbol-package symbol))))
@@ -33,18 +35,21 @@
        (incf count)))))
 
 (defun initialize-index (&optional add-internal-symbols)
-  (setf *index* (make-instance 'montezuma:index))
-  (let ((definitions-count 0) (symbols-count 0))
-    (do-symbols (symbol)
-      (when (or add-internal-symbols
-                (eq :external (symbol-type symbol)))
+  (setf *index* (make-instance 'montezuma:index)
+        *registered* (make-hash-table :test 'eq))
+  (let ((definitions-count 0))
+    (do-all-symbols (symbol)
+      (when (and (or add-internal-symbols
+                     (eq :external (symbol-type symbol)))
+                 (not (gethash symbol *registered*)))
         (montezuma:add-document-to-index *index*
                                          (multiple-value-bind (doc count)
                                              (make-symbol-document symbol)
                                            (incf definitions-count count)
                                            doc))
-        (incf symbols-count)))
-    (values symbols-count definitions-count)))
+        (setf (gethash symbol *registered*) T)))
+    (values (hash-table-count *registered*)
+            definitions-count)))
 
 (initialize-index)
 
