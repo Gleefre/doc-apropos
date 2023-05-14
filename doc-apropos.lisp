@@ -33,7 +33,7 @@
 (defun initialize-index ()
   (setf *index* (make-instance 'montezuma:index))
   (let ((definitions-count 0) (symbols-count 0))
-    (do-all-symbols (symbol)
+    (do-symbols (symbol)
       (montezuma:add-document-to-index *index*
                                        (multiple-value-bind (doc count)
                                            (make-symbol-document symbol)
