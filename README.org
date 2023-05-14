@@ -23,13 +23,7 @@
      *QUERY-IO* until the user enters y or Y as an affirmative, or either
      n or N as a negative answer. It asks again if you enter any other
      characters.
-
-  COMMON-LISP:Y-OR-N-P
-  Y-OR-N-P prints the message, if any, and reads characters from
-     *QUERY-IO* until the user enters y or Y as an affirmative, or either
-     n or N as a negative answer. It asks again if you enter any other
-     characters.
-  ; => 2
+  ; => 1
   #+END_SRC
 
   By default it searchs for functions.
@@ -39,22 +33,14 @@
   COMMON-LISP:READTABLE
   A READTABLE is a data structure that maps characters into syntax
   types for the Common Lisp expression reader.
-
-  COMMON-LISP:READTABLE
-  A READTABLE is a data structure that maps characters into syntax
-  types for the Common Lisp expression reader.
-
-  ; => 2
+  ; => 1
   #+END_SRC
-
-  (You can notice that it prints same entry twice.
-  This is a bug that has yet to be fixed.)
 
   If you want to reregister the available symbols, you can use ~initialize-index~ function:
   #+BEGIN_SRC lisp
   CL-USER> (doc-apropos:initialize-index)
-  ; => 43317
-  ; => 4831
+  ; => 10815
+  ; => 2571
   #+END_SRC
   It returns two values: number of symbols scanned and number of descriptions found (and added).
 * Bugs & Contributions
