@@ -1,0 +1,77 @@
+#+title: doc-apropos
+#+author: Gleefre
+#+email: varedif.a.s@gmail.com
+
+#+language: en
+#+options: toc:nil
+
+=doc-apropos= provides similar functionality to ~apropos~, but allows to search documentation of symbols.
+
+* Quickstart
+  Clone repository to your local-projects directory. Then load ~:doc-apropos~ system.
+  #+BEGIN_SRC lisp
+  (ql:quickload :doc-apropos)  ; with quicklisp
+  (asdf:load-system :doc-apropos)  ; with asdf
+  #+END_SRC
+  It will scan all available symbols, so it might take some time.
+
+  To search through documentation simply use ~doc-apropos~ function:
+  #+BEGIN_SRC lisp
+  CL-USER> (doc-apropos:doc-apropos "prints the message")
+  COMMON-LISP:Y-OR-N-P
+  Y-OR-N-P prints the message, if any, and reads characters from
+     *QUERY-IO* until the user enters y or Y as an affirmative, or either
+     n or N as a negative answer. It asks again if you enter any other
+     characters.
+
+  COMMON-LISP:Y-OR-N-P
+  Y-OR-N-P prints the message, if any, and reads characters from
+     *QUERY-IO* until the user enters y or Y as an affirmative, or either
+     n or N as a negative answer. It asks again if you enter any other
+     characters.
+  ; => 2
+  #+END_SRC
+
+  By default it searchs for functions.
+  To search through other type of documentation pass additional parameter:
+  #+BEGIN_SRC lisp
+  CL-USER> (doc-apropos:doc-apropos "characters" 'structure)
+  COMMON-LISP:READTABLE
+  A READTABLE is a data structure that maps characters into syntax
+  types for the Common Lisp expression reader.
+
+  COMMON-LISP:READTABLE
+  A READTABLE is a data structure that maps characters into syntax
+  types for the Common Lisp expression reader.
+
+  ; => 2
+  #+END_SRC
+
+  (You can note that it prints same entry twice.
+  This is a bug that has yet to be fixed.)
+
+  If you want to reregister the available symbols, you can use ~initialize-index~ function:
+  #+BEGIN_SRC lisp
+  CL-USER> (doc-apropos:initialize-index)
+  ; => 43317
+  ; => 4831
+  #+END_SRC
+  It returns two values: number of symbols scanned and number of descriptions found (and added).
+* Bugs & Contributions
+  Feel free to report bugs or make suggestions by filing an issue on github.
+
+  Feel free to submit pull requests on github as well.
+* License
+  Copyright 2023 Gleefre
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
