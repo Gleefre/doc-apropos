@@ -32,16 +32,18 @@
        (montezuma:add-field doc (montezuma:make-field (symbol-name doc-type) documentation))
        (incf count)))))
 
-(defun initialize-index ()
+(defun initialize-index (&optional add-internal-symbols)
   (setf *index* (make-instance 'montezuma:index))
   (let ((definitions-count 0) (symbols-count 0))
     (do-symbols (symbol)
-      (montezuma:add-document-to-index *index*
-                                       (multiple-value-bind (doc count)
-                                           (make-symbol-document symbol)
-                                         (incf definitions-count count)
-                                         doc))
-      (incf symbols-count))
+      (when (or add-internal-symbols
+                (eq :external (symbol-type symbol)))
+        (montezuma:add-document-to-index *index*
+                                         (multiple-value-bind (doc count)
+                                             (make-symbol-document symbol)
+                                           (incf definitions-count count)
+                                           doc))
+        (incf symbols-count)))
     (values symbols-count definitions-count)))
 
 (initialize-index)
